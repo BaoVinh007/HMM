@@ -162,16 +162,8 @@ namespace HHM
 
             double logLikelihood;
             double[,] prob = ForwardBackwardAlgorithm.Forward(hmm, sequence,out logLikelihood);
-            /*
-            for (int i = 0; i < prob.GetLength(0); i++)
-            {
-                for (int j = 0; j < prob.GetLength(1); j++)
-                {
-                    Console.Write(prob[i, j] + " ");
-                }
-                Console.WriteLine();
-            }*/
-            Console.Write(" Prob = " + logLikelihood);
+            
+            Console.Write("logLikelihood = ln (Prob = 0.139896) = " + logLikelihood);
             Console.Read();
         }
 
@@ -261,7 +253,7 @@ namespace HHM
 
         public static void Problem1()
         {
-            /*
+            
             double[,] transition =
             {  
                 { 0.5, 0.4, 0.1 },
@@ -291,15 +283,17 @@ namespace HHM
             HiddenMarkovModel hmm = new HiddenMarkovModel(transition, emission, initial);
 
 
-            // Get log nature of probability
+            // Get natural logarithm of probability
             double logLikeLihood = hmm.Evaluate(sequence);
 
-            Console.Write("logLikeliHood = ln(prob) = " + logLikeLihood);
+            Console.WriteLine("logLikeliHood = ln(prob = 0.139896) = " + logLikeLihood);
+            double likelihood = Math.Exp(logLikeLihood);
+            Console.WriteLine("likelihood = " + likelihood);
             Console.Read();
-             */ 
-            
+            /*
+
             // Create the transition matrix A
-            double[,] transition =
+            double[,] A =
             {  
                 { 0.7, 0.3 },
                 { 0.4, 0.6 }                
@@ -307,31 +301,34 @@ namespace HHM
 
             // Create the emission matrix B
             // High-Low
-            double[,] emission = 
+            double[,] B = 
             {  
                 { 0.1, 0.4, 0.5 },
                 { 0.7, 0.2, 0.1 }                
             };
 
             // Create the initial probabilities pi
-            double[] initial =
+            double[] pi =
             {
                 0.6, 0.4
             };
 
             // Create a new hidden Markov model
-            HiddenMarkovModel hmm = new HiddenMarkovModel(transition, emission, initial);
+            //HiddenMarkovModel hmm = new HiddenMarkovModel(transitionMatrix_A, transitionMatrix_B, initial_pi);
+            HiddenMarkovModel hmm = new HiddenMarkovModel(A, B, pi);
 
             // After that, one could, for example, query the probability
             // of a sequence occurring. We will consider the sequence
             int[] sequence = new int[] { 0, 1, 0, 2};
-
+            
+            // Get natural logarithm of probability
             double loglikelihood = hmm.Evaluate(sequence);
-            Console.Write("Loglikelihood = ln(probability) = " + loglikelihood);
-            //calculateForward(transition, emission, initial, sequence);
-
+            Console.WriteLine("logLikelihood = ln (Prob = 0.009630) = " + loglikelihood);
+            // Convert to a likelihood: 0.00015867837561
+            double likelihood = Math.Exp(loglikelihood);
+            Console.WriteLine("likelihood = " + likelihood);
             Console.Read();
-             
+             */
         }
 
         public static void calculateForward(double[,] transition, double[,] emission, double[] initial, int[] sequence)
@@ -407,6 +404,7 @@ namespace HHM
             // We can also get the Viterbi path of the sequence
             int[] path = hmm.Decode(sequence, out logLikelihood);
             Console.WriteLine(" Loglikelihood = ln(prob) = " + logLikelihood);
+
             // 2 1 1 mean Sunny Cloudy Cloudy
             // 0 : Rainy
             // 1 : Cloudy
