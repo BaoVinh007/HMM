@@ -261,6 +261,43 @@ namespace HHM
 
         public static void Problem1()
         {
+            /*
+            double[,] transition =
+            {  
+                { 0.5, 0.4, 0.1 },
+                { 0.1, 0.8, 0.1 },
+                { 0.1, 0.6, 0.3 }
+            };
+
+            // Create the emission matrix B
+
+            // High-Low
+            double[,] emission = 
+            {  
+                { 0.1, 0.9 },
+                { 0.5, 0.5 },
+                { 0.9, 0.1 }
+            };
+
+            // Create the initial probabilities pi
+            double[] initial =
+            {
+                0.3, 0.4, 0.3
+            };
+
+            // 0 mean High, 1 mean Low in sequence array
+            int[] sequence = new int[] { 0, 0, 0 };
+
+            HiddenMarkovModel hmm = new HiddenMarkovModel(transition, emission, initial);
+
+
+            // Get log nature of probability
+            double logLikeLihood = hmm.Evaluate(sequence);
+
+            Console.Write("logLikeliHood = ln(prob) = " + logLikeLihood);
+            Console.Read();
+             */ 
+            
             // Create the transition matrix A
             double[,] transition =
             {  
@@ -289,9 +326,12 @@ namespace HHM
             // of a sequence occurring. We will consider the sequence
             int[] sequence = new int[] { 0, 1, 0, 2};
 
-            calculateForward(transition, emission, initial, sequence);
+            double loglikelihood = hmm.Evaluate(sequence);
+            Console.Write("Loglikelihood = ln(probability) = " + loglikelihood);
+            //calculateForward(transition, emission, initial, sequence);
 
             Console.Read();
+             
         }
 
         public static void calculateForward(double[,] transition, double[,] emission, double[] initial, int[] sequence)
@@ -360,10 +400,13 @@ namespace HHM
             // After that, one could, for example, query the probability
             // of a sequence occurring. We will consider the sequence
             int[] sequence = new int[] { 0, 0, 0 };
-            //double logLikelihood;                       
+            double logLikelihood01;
+            logLikelihood01 = hmm.Evaluate(sequence);
+            Console.WriteLine(" Loglikelihood = ln(prob) = " + logLikelihood01);
+            double logLikelihood;                       
             // We can also get the Viterbi path of the sequence
-            int[] path = hmm.Decode(sequence);
-            //Console.WriteLine(" Loglikelihood = " + logLikelihood);
+            int[] path = hmm.Decode(sequence, out logLikelihood);
+            Console.WriteLine(" Loglikelihood = ln(prob) = " + logLikelihood);
             // 2 1 1 mean Sunny Cloudy Cloudy
             // 0 : Rainy
             // 1 : Cloudy
@@ -383,36 +426,9 @@ namespace HHM
             //learningDiscreteByBaumWelch();
             //forwardProb();
             //learningClassifier();
-            //Problem1();
+            Problem1();
             //Problem2();
-
-            double[,] transition =
-            {  
-                { 0.5, 0.4, 0.1 },
-                { 0.1, 0.8, 0.1 },
-                { 0.1, 0.6, 0.3 }
-            };
-
-            // Create the emission matrix B
-
-            // High-Low
-            double[,] emission = 
-            {  
-                { 0.1, 0.9 },
-                { 0.5, 0.5 },
-                { 0.9, 0.1 }
-            };
-
-            // Create the initial probabilities pi
-            double[] initial =
-            {
-                0.3, 0.4, 0.3
-            };
-
-            // 0 mean High, 1 mean Low in sequence array
-            int[] sequence = new int[] { 0, 0, 0 };
-            calculateForward(transition, emission, initial, sequence);
-            //Problem1();
+            //calculateForward(transition, emission, initial, sequence);            
         }
     }
 }

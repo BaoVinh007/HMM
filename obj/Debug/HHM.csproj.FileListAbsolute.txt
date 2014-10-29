@@ -10,3 +10,13 @@ G:\SPSU\Fall 2014\Research\Hidden Markov Model\HHM\bin\Debug\AForge.Math.dll
 G:\SPSU\Fall 2014\Research\Hidden Markov Model\HHM\obj\Debug\HHM.csprojResolveAssemblyReference.cache
 G:\SPSU\Fall 2014\Research\Hidden Markov Model\HHM\obj\Debug\HHM.exe
 G:\SPSU\Fall 2014\Research\Hidden Markov Model\HHM\obj\Debug\HHM.pdb
+C:\HMM\bin\Debug\HHM.exe.config
+C:\HMM\obj\Debug\HHM.exe
+C:\HMM\obj\Debug\HHM.pdb
+C:\HMM\bin\Debug\HHM.exe
+C:\HMM\bin\Debug\HHM.pdb
+C:\HMM\bin\Debug\AForge.dll
+C:\HMM\bin\Debug\AForge.Math.dll
+C:\HMM\bin\Debug\AForge.xml
+C:\HMM\bin\Debug\AForge.Math.xml
+C:\HMM\obj\Debug\HHM.csprojResolveAssemblyReference.cache
