@@ -417,6 +417,63 @@ namespace HHM
             
         }
 
+        public static void Problem3()
+        {
+
+            double[,] transition =
+            {  
+                { 0.5, 0.4, 0.1 },
+                { 0.1, 0.8, 0.1 },
+                { 0.1, 0.6, 0.3 }
+            };
+
+            // Create the emission matrix B
+
+            // High-Low
+            double[,] emission = 
+            {  
+                { 0.1, 0.9 },
+                { 0.5, 0.5 },
+                { 0.9, 0.1 }
+            };
+
+            // Create the initial probabilities pi
+            double[] initial =
+            {
+                0.3, 0.4, 0.3
+            };
+
+            // 0 mean High, 1 mean Low in sequence array
+            int[] sequence = new int[] { 0, 0, 0 };
+
+            HiddenMarkovModel hmm = new HiddenMarkovModel(transition, emission, initial);
+            double logLikelihood = hmm.Evaluate(sequence);
+            Console.WriteLine("LogLikelihood = " + Math.Exp( logLikelihood));
+            // Create a Baum-Welch learning algorithm to teach it
+            BaumWelchLearning teacher = new BaumWelchLearning(hmm) 
+            {
+                //Tolerance = 0.001, // iterate until log-likelihood changes less than 0.001
+                Iterations = 2    // don't place an upper limit on the number of iterations
+            };
+            
+            // and call its Run method to start learning
+            double error = teacher.Run(sequence);
+
+            // All results was got natural logarithm
+            // New transition matrix, new emission matrix, and new initial array
+            double [,] newTransitions = hmm.Transitions;
+            double[,] newEmissions = hmm.Emissions;
+            double[] newInitial = hmm.Probabilities;
+
+            double logLikelihoodAfter = hmm.Evaluate(sequence);
+            Console.WriteLine("LogLikelihood After= " + Math.Exp( logLikelihoodAfter));
+            Console.Read();
+            //double[][,] loggammaMatrix = teacher.LogGamma;
+            //double[][][,] logksiMatrix = teacher.LogKsi;
+            //double[] iniMatrix = teacher.LogWeights;
+            //double A;
+        }
+
         static void Main(string[] args)
         {
             //computeProbRandomIntSeq();
@@ -424,8 +481,9 @@ namespace HHM
             //learningDiscreteByBaumWelch();
             //forwardProb();
             //learningClassifier();
-            Problem1();
+            //Problem1();
             //Problem2();
+            Problem3();
             //calculateForward(transition, emission, initial, sequence);            
         }
     }
